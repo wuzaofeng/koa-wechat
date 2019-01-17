@@ -3,7 +3,6 @@ const Redis = require('koa-redis')
 const Request = require('../../utils/request')
 const url = require('../../config/url')
 const Store = new Redis().client
-const compiled = require('../../utils/ejs')
 const config = require('../../config/config')
 
 router.prefix('/wechat')

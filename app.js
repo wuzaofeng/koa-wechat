@@ -9,13 +9,15 @@ const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const config = require('./config/config')
-const wechat_middleware = require('./wechat-lib/middleware')
+const wechat_middleware = require('./middleware/wechat')
+const {reply} = require('./wechat/reply')
 const index = require('./routes/index')
 const wechat = require('./routes/wechat/wechat')
 const wechat_menu = require('./routes/wechat/menu')
 const wechat_conditional = require('./routes/wechat/conditional')
 const wechat_kfaccount = require('./routes/wechat/kfaccount')
 const wechat_mass = require('./routes/wechat/mass')
+
 app.keys = ['keys', 'keykeys'];
 app.use(session({
   store: redisStore({
@@ -48,7 +50,7 @@ app.use(async (ctx, next) => {
 })
 
 /** 配置请求 */
-app.use(wechat_middleware(config))
+app.use(wechat_middleware(config, reply))
 
 // routes
 app.use(index.routes(), index.allowedMethods())
