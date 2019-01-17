@@ -7,7 +7,8 @@ const bodyparser = require('koa-bodyparser')
 const xmlparser = require('koa-xml-body')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
-const redisStore = require('koa-redis')
+const redis = require('koa-redis')
+const mongoose = require('mongoose')
 const config = require('./config/config')
 const wechat_middleware = require('./wechat-lib/middleware')
 const {reply} = require('./wechat/reply')
@@ -18,11 +19,19 @@ const wechat_conditional = require('./routes/wechat/conditional')
 const wechat_kfaccount = require('./routes/wechat/kfaccount')
 const wechat_mass = require('./routes/wechat/mass')
 
+// const { initSchemas, connect } = require('./database/init')
+
+;(async function(){
+  // await connect(config.db)
+  // initSchemas()
+  await mongoose.connect(config.db, {
+    useNewUrlParser: true
+  })
+})()
+
 app.keys = ['keys', 'keykeys'];
 app.use(session({
-  store: redisStore({
-    // Options specified here
-  })
+  store: redis()
 }));
 
 // error handler

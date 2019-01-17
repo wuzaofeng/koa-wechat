@@ -29,5 +29,6 @@ const wechatCfg = {
 }
 
 ;(async function (){
-const client = new Wechat(wechatCfg.wechat)
+  const client = new Wechat(wechatCfg.wechat)
+  // const data = await client
 })()

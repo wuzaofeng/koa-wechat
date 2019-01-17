@@ -12,5 +12,6 @@ module.exports = {
     wechat: 'wechat',
     access_token: 'access_token',
     expires_in: 'expires_in'
-  }
+  },
+  db: 'mongodb://localhost:27017/wechat'
 }
