@@ -32,5 +32,18 @@ module.exports = {
     get: '/cgi-bin/message/mass/get', // 查询群发消息发送状态
     getspeed: '/cgi-bin/message/mass/speed/get', // 控制群发速度
     setspeed: '/cgi-bin/message/mass/speed/set', // 设置群发速度
+  },
+  qrcode: {
+    create: 'cgi-bin/qrcode/create', // 创建二维码ticket
+    show: '/cgi-bin/showqrcode' // 通过ticket换取二维码
+  },
+  short_url: {
+    create: '/cgi-bin/shorturl'
+  },
+  semantic: {
+    search: '/semantic/semproxy/search'
+  },
+  ai: {
+    translate: '/cgi-bin/media/voice/translatecontent'
   }
 }

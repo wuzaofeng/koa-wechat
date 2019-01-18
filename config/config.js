@@ -2,6 +2,7 @@ module.exports = {
   // 微信服务器
   server: {
     base: 'https://api.weixin.qq.com',
+    mp_base: 'https://mp.weixin.qq.com',
     server_timeout: 10000
   },
   appID: 'wxe3867e381e773fa0',
