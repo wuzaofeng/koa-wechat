@@ -10,14 +10,12 @@ const session = require('koa-generic-session')
 const redis = require('koa-redis')
 const mongoose = require('mongoose')
 const config = require('./config/config')
-const wechat_middleware = require('./wechat-lib/middleware')
-const {reply} = require('./wechat/reply')
-const index = require('./routes/index')
+// const index = require('./routes/index')
 const wechat = require('./routes/wechat/wechat')
-const wechat_menu = require('./routes/wechat/menu')
-const wechat_conditional = require('./routes/wechat/conditional')
-const wechat_kfaccount = require('./routes/wechat/kfaccount')
-const wechat_mass = require('./routes/wechat/mass')
+// const wechat_menu = require('./routes/wechat/menu')
+// const wechat_conditional = require('./routes/wechat/conditional')
+// const wechat_kfaccount = require('./routes/wechat/kfaccount')
+// const wechat_mass = require('./routes/wechat/mass')
 
 // const { initSchemas, connect } = require('./database/init')
 
@@ -58,17 +56,13 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-/** 配置请求 */
-app.use(wechat_middleware(config, reply))
-
 // routes
-app.use(index.routes(), index.allowedMethods())
-
+// app.use(index.routes(), index.allowedMethods())
 app.use(wechat.routes(), wechat.allowedMethods())
-app.use(wechat_menu.routes(), wechat_menu.allowedMethods())
-app.use(wechat_conditional.routes(), wechat_conditional.allowedMethods())
-app.use(wechat_kfaccount.routes(), wechat_kfaccount.allowedMethods())
-app.use(wechat_mass.routes(), wechat_mass.allowedMethods())
+// app.use(wechat_menu.routes(), wechat_menu.allowedMethods())
+// app.use(wechat_conditional.routes(), wechat_conditional.allowedMethods())
+// app.use(wechat_kfaccount.routes(), wechat_kfaccount.allowedMethods())
+// app.use(wechat_mass.routes(), wechat_mass.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

@@ -13,7 +13,7 @@ service.interceptors.request.use(
     // if (store.getters.token) {
     //   config.headers['token'] = getCookie(TokenKey) // 让每个请求携带自定义token 请根据实际情况自行修改
     // }
-    console.log(config)
+    // console.log(config)
     return config
   },
   error => {

@@ -8,14 +8,13 @@
 const Request = require('../utils/request')
 const config = require('../config/config')
 const url = require('../config/url')
-
 module.exports = class WechatOAuth {
   constructor(opts) {
     this.appID = opts.appID
     this.appsecret = opts.appsecret
   }
 
-  async getAuthorizeURL (scope="snsapi_base", target, state) {
+  getAuthorizeURL (scope="snsapi_base", target, state) {
     return `${config.server.op_base}${url.oauth.authorize}?appid=${this.appID}&redirect_uri=${encodeURI(target)}&response_type=code&scope=${scope}${state&&`&state=${state}`}#wechat_redirect`
   }
 
@@ -28,7 +27,7 @@ module.exports = class WechatOAuth {
       grant_type: 'authorization_code'
     }
     return await Request({
-      url: url.oauth.access_token + `?access_token=${token}`,
+      url: url.oauth.access_token,
       params,
     })
   }
@@ -37,7 +36,6 @@ module.exports = class WechatOAuth {
     const params = {
       access_token: token,
       openid,
-      code,
       lang
     }
     return await Request({

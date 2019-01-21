@@ -1,4 +1,5 @@
 module.exports = {
+  baseUrl: 'http://baoz.free.idcfengye.com',
   // 微信服务器
   server: {
     base: 'https://api.weixin.qq.com',
