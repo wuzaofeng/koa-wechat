@@ -4,6 +4,8 @@ const Wechat = require('../../controllers/wechat')
 
 router.prefix('/wechat')
 
+router.get('/sdk', Wechat.sdk)
+
 // 进入微信消息中间件
 router.get('/wx-hear', Wechat.hear)
 router.post('/wx-hear', Wechat.hear)

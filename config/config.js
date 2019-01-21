@@ -14,7 +14,9 @@ module.exports = {
   redis: {
     wechat: 'wechat',
     access_token: 'access_token',
-    expires_in: 'expires_in'
+    token_expires_in: 'token_expires_in',
+    ticket: 'ticket',
+    ticket_expires_in: 'ticket_expires_in'
   },
   db: 'mongodb://localhost:27017/wechat'
 }

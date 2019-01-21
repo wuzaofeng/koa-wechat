@@ -9,6 +9,7 @@ const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redis = require('koa-redis')
 const mongoose = require('mongoose')
+const moment = require('moment')
 const config = require('./config/config')
 // const index = require('./routes/index')
 const wechat = require('./routes/wechat/wechat')
@@ -45,7 +46,10 @@ app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
-  extension: 'ejs'
+  extension: 'pug',
+  options: {
+    moment: moment
+  }
 }))
 
 // logger

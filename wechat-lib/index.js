@@ -1,6 +1,7 @@
 const Request = require('../utils/request')
 const config = require('../config/config')
 const url = require('../config/url')
+const sdk = require('../config/sdk')
 
 module.exports = class Wechat {
   constructor(opts) {
@@ -9,13 +10,15 @@ module.exports = class Wechat {
     this.appsecret = opts.appsecret
     this.saveAccessToken = opts.saveAccessToken // 保存token
     this.getAccessToken = opts.getAccessToken // 获取token
+    this.getTicket = opts.getTicket
+    this.saveTicket = opts.saveTicket
     this.fetchAccessToken()
   }
 
   /** 获取Token */
   async fetchAccessToken() {
     let data = await this.getAccessToken()
-    if (!this.isValidToken(data)) {
+    if (!this.isValid(data)) {
       data = await this.uptadeAccessToken()
     }
 
@@ -41,8 +44,8 @@ module.exports = class Wechat {
     return res  
   }
 
-  /** 验证Token是否过期 */
-  isValidToken(data) {
+  /** 验证是否过期 */
+  isValid(data) {
     if (!data || !data.expires_in) {
       return false
     }
@@ -136,4 +139,31 @@ module.exports = class Wechat {
       url: url.getmenu + `?access_token=${token}`
     })
   }
+
+  /** 
+   * SDK 
+   */
+
+  /** 获取 ticket */
+  async fetchTicket(token) {
+    let data = await this.getTicket()
+    if (!this.isValid(data)) {
+      data = await this.uptadeTicket(token)
+    }
+
+    await this.saveTicket(data)
+    return data
+  }
+
+  async uptadeTicket(token) {
+    const res = await Request({
+      url: sdk.getticket + `?access_token=${token}&type=jsapi`,
+    })
+
+    const now = new Date().getTime()
+    const expires_in = now + (res.expires_in - 20) * 1000
+    res.expires_in = expires_in
+    return res
+  }
+
 }
