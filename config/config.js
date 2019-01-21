@@ -3,6 +3,7 @@ module.exports = {
   server: {
     base: 'https://api.weixin.qq.com',
     mp_base: 'https://mp.weixin.qq.com',
+    op_base: 'https://open.weixin.qq.com',
     server_timeout: 10000
   },
   appID: 'wxe3867e381e773fa0',

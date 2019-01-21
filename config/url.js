@@ -45,5 +45,10 @@ module.exports = {
   },
   ai: {
     translate: '/cgi-bin/media/voice/translatecontent'
+  },
+  oauth: {
+    authorize: '/connect/oauth2/authorize',
+    access_token: '/sns/oauth2/access_token',
+    user_info: '/sns/userinfo'
   }
 }

@@ -102,4 +102,38 @@ module.exports = class Wechat {
       data: content
     })
   }
+
+  /** 创建自定义菜单 */
+  async createMenu (token, menu, rule = null) {
+    let createUrl = url.menu.create + `?access_token=${token}`
+    let data = menu
+    if (rule) {
+      data = {
+        ...menu,
+        createUrl
+      }
+      createUrl = url.conditional.create + `?access_token=${token}`
+    }
+    return await Request({
+      method: 'post',
+      url: createUrl,
+      data
+    })
+  }
+
+  /** 删除自定义菜单(包括个性化菜单) */
+  async delMenu (token) {
+    return await Request({
+      method: 'post',
+      url: url.delmenu + `?access_token=${token}`
+    })
+  }
+
+  /** 获取菜单 */
+  async getMenu (token) {
+    return await Request({
+      method: 'post',
+      url: url.getmenu + `?access_token=${token}`
+    })
+  }
 }

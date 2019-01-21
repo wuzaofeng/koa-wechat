@@ -1,5 +1,6 @@
 const Redis = require('koa-redis')
 const Wechat = require('../wechat-lib')
+const WechatOAuth = require('../wechat-lib/oauth')
 const {  appID, appsecret, token, redis } = require('../config/config')
 
 const Store = new Redis().client
@@ -28,8 +29,7 @@ const wechatCfg = {
   }
 }
 
-;(async function (){
-  const client = new Wechat(wechatCfg.wechat)
-  // const data = await client
-  module.exports = client
-})()
+module.exports = {
+  getWechat: () => new Wechat(wechatCfg.wechat),
+  getOAuth: () => new WechatOAuth(wechatCfg.wechat)
+}
