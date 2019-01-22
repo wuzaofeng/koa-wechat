@@ -1,0 +1,7 @@
+h1
+  if user
+    span 欢迎#{user.nickname}
+    a(href="/logout") 登出
+  else
+    a(href="/user/signin") 登录
+    a(href="/user/signup") 注册

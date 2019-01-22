@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 注册
+  form(method="POST", action="/user/signup")
+    label 用户邮箱 
+    input(type="text" name="user[email]")
+    label 用户昵称
+    input(type="text" name="user[nickname]")
+    label 密码
+    input(type="text" name="user[password]")
+    button(type="submit") 提交

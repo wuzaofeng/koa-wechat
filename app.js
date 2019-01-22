@@ -11,12 +11,12 @@ const redis = require('koa-redis')
 const mongoose = require('mongoose')
 const moment = require('moment')
 const config = require('./config/config')
-// const index = require('./routes/index')
-const wechat = require('./routes/wechat/wechat')
-// const wechat_menu = require('./routes/wechat/menu')
-// const wechat_conditional = require('./routes/wechat/conditional')
-// const wechat_kfaccount = require('./routes/wechat/kfaccount')
-// const wechat_mass = require('./routes/wechat/mass')
+
+const index = require('./routes/index')
+const wechat = require('./routes/wechat')
+const users = require('./routes/users')
+
+const User = require('./database/schema/user')
 
 // const { initSchemas, connect } = require('./database/init')
 
@@ -24,6 +24,7 @@ const wechat = require('./routes/wechat/wechat')
   // await connect(config.db)
   // initSchemas()
   await mongoose.connect(config.db, {
+    useCreateIndex: true,
     useNewUrlParser: true
   })
 })()
@@ -52,6 +53,31 @@ app.use(views(__dirname + '/views', {
   }
 }))
 
+app.use(async(ctx, next) => {
+  let user = ctx.session.user
+  if (user && user._id) {
+    user = await User.findOne({
+      _id: user._id
+    })
+    console.log(user)
+    ctx.session.user = {
+      _id: user._id,
+      nickname: user.nickname
+    }
+
+    ctx.state = {
+      ...ctx.state,
+      user: {
+        _id: user._id,
+        nickname: user.nickname
+      }
+    }
+  } else {
+    ctx.session.user = null
+  }
+  await next()
+})
+
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -61,12 +87,10 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-// app.use(index.routes(), index.allowedMethods())
+app.use(index.routes(), index.allowedMethods())
 app.use(wechat.routes(), wechat.allowedMethods())
-// app.use(wechat_menu.routes(), wechat_menu.allowedMethods())
-// app.use(wechat_conditional.routes(), wechat_conditional.allowedMethods())
-// app.use(wechat_kfaccount.routes(), wechat_kfaccount.allowedMethods())
-// app.use(wechat_mass.routes(), wechat_mass.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

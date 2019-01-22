@@ -31,6 +31,5 @@ exports.userInfo = async (ctx, next) => {
 exports.sdk = async (ctx, next) => {
   const url = ctx.href
   const params = await api.wechat.getSignature(url)
-  console.log(params)
   await ctx.render('index', params)
 }

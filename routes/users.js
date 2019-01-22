@@ -1,13 +1,12 @@
 const router = require('koa-router')()
+const User = require('../controllers/user')
+router.prefix('/user')
 
-router.prefix('/users')
-
-router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
-})
-
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
-})
+// 用户的注册登录路由
+router.get('/signup', User.showSignup)
+router.get('/signin', User.showSignin)
+router.post('/signup', User.signup)
+router.post('/signin', User.signin)
+router.post('/logout', User.logout)
 
 module.exports = router

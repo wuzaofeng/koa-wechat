@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 登录
+  form(method="POST", action="/user/signin")
+    label 用户邮箱 
+    input(type="text" name="user[email]")
+    label 密码
+    input(type="text" name="user[password]")
+    button(type="submit") 登录
